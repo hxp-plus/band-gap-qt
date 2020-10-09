@@ -18,15 +18,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
+    std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::connectMATLAB();
     matlabPtr->eval((QString("cd '") + QCoreApplication::applicationDirPath() + QString("'")).toStdU16String());
     matlabPtr->eval(u"clc");
     matlabPtr->eval(u"clear");
     matlabPtr->eval(u"load('data/band_gap_zc.mat');");
-    matlabPtr->eval(u"PLANK_CONST = 6.62e-34;");
-    matlabPtr->eval(u"SPEED_OF_LIGHT = 3e8;");
-    matlabPtr->eval(u"ELECTRON_VOLT = 1.6e-19;");
-    matlabPtr->eval(u"FIT_TYPE = 'poly1';");
+    matlabPtr->eval(u"PLANK_CONST=6.62e-34;");
+    matlabPtr->eval(u"SPEED_OF_LIGHT=3e8;");
+    matlabPtr->eval(u"ELECTRON_VOLT=1.6e-19;");
+    matlabPtr->eval(u"FIT_TYPE='poly1';");
 
     matlabPtr->eval(u"figure('visible', 'off');hold on;");
     matlabPtr->eval(u"plot_all_fig(flipud(base_line_x), \

@@ -10,6 +10,7 @@
 #include "string.h"
 #include <QMessageBox>
 #include <QVariant>
+#include "stdio.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -75,19 +76,27 @@ void MainWindow:: handleButton()
     ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->pushButton->setEnabled(false);
     ui->pushButton->setText("（已完成）");
-    ui->doubleSpinBox->setVisible(true);
 
 }
 
 void MainWindow:: handleButton_2()
 {
-    QMessageBox msgBox;
-    msgBox.setText(QVariant(ui->doubleSpinBox->value()).toString() + "和" + QVariant(ui->doubleSpinBox_2->value()).toString());
-    msgBox.exec();
     std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::connectMATLAB();
 
-    matlabPtr->eval(QString("lower_limit_1=2").toStdU16String());
-    matlabPtr->eval(u"lower_limit_1");
+    QMessageBox msgbox;
+
+    msgbox.setText((QString("lower_limit_1=find_closest(str2double(") +
+                QVariant(ui->doubleSpinBox->value()).toString() +
+                QString("), base_line_x_to_electron_volts);")));
+    msgbox.exec();
+
+    matlabPtr->eval((QString("lower_limit_1=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts);")).toStdU16String());
+    matlabPtr->eval((QString("upper_limit_1=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox_2->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts);")).toStdU16String());
+
     matlabPtr->eval(u"base_line_x_to_electron_volts_zoomed = \
                           base_line_x_to_electron_volts(lower_limit_1:upper_limit_1); \
                       base_line_y_zoomed = base_line_y(lower_limit_1:upper_limit_1); \
@@ -95,6 +104,27 @@ void MainWindow:: handleButton_2()
                       transmittance_20min_zoomed = transmittance_20min(lower_limit_1:upper_limit_1); \
                       transmittance_30min_zoomed = transmittance_30min(lower_limit_1:upper_limit_1); \
                       transmittance_40min_zoomed = transmittance_40min(lower_limit_1:upper_limit_1);");
+    matlabPtr->eval(u"figure('visible', 'off');hold on;");
+    matlabPtr->eval(u"plot_all_fig(base_line_x_to_electron_volts_zoomed, \
+                    (log((base_line_y_zoomed ./ base_line_y_zoomed).^(-1))).^2, \
+                    (log((transmittance_10min_zoomed ./ base_line_y_zoomed).^(-1))).^2, \
+                    (log((transmittance_20min_zoomed ./ base_line_y_zoomed).^(-1))).^2, \
+                    (log((transmittance_30min_zoomed ./ base_line_y_zoomed).^(-1))).^2, \
+                    (log((transmittance_40min_zoomed ./ base_line_y_zoomed).^(-1))).^2, \
+                    {'0min', '10min', '20min', '30min', '40min'}, \
+                    'Energy(eV)', '$(\\alpha \\hbar \\omega)^2$', \
+                    'Graph Needed to Solve Band Gap', \
+                    'northwest');");
+    matlabPtr->eval(u"hold off;save_fig('graph_needed_to_solve_band_gap_zoomed');");
+
+    QString filename = "figures/graph_needed_to_solve_band_gap_zoomed/graph_needed_to_solve_band_gap_zoomed.png";
+    QImage image(filename);
+    QPixmap pic=QPixmap::fromImage(image);
+    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->pushButton_2->setEnabled(false);
+    ui->pushButton_2->setText("（已完成）");
+    ui->doubleSpinBox->setEnabled(false);
+    ui->doubleSpinBox_2->setEnabled(false);
 }
 
 MainWindow::~MainWindow()

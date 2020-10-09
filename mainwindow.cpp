@@ -20,9 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::startMATLAB();
     matlabPtr->eval((QString("cd '") + QCoreApplication::applicationDirPath() + QString("'")).toStdU16String());
-    QMessageBox msgBox;
-    msgBox.setText((QString("cd '") + QCoreApplication::applicationDirPath() + QString("'")));
-    msgBox.exec();
     matlabPtr->eval(u"clc");
     matlabPtr->eval(u"clear");
     matlabPtr->eval(u"load('data/band_gap_zc.mat');");

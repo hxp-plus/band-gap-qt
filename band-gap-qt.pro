@@ -18,6 +18,13 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
+INCLUDEPATH += /usr/local/Polyspace/R2019b/extern/include
+
+LIBS += /usr/local/Polyspace/R2019b/extern/bin/glnxa64/libMatlabDataArray.so
+
+LIBS += /usr/local/Polyspace/R2019b/extern/bin/glnxa64/libMatlabEngine.so
+
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

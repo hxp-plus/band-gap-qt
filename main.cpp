@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include "MatlabEngine.hpp"
+#include "MatlabDataArray.hpp"
 
 int main(int argc, char *argv[])
 {

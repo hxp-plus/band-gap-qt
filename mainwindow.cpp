@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::connectMATLAB();
     matlabPtr->eval(u"clc");
     matlabPtr->eval(u"clear");
-    matlabPtr->eval(u"load('data/band_gap_hxp.mat');");
+    matlabPtr->eval(u"load('data/band_gap_zc.mat');");
     matlabPtr->eval(u"PLANK_CONST = 6.62e-34;");
     matlabPtr->eval(u"SPEED_OF_LIGHT = 3e8;");
     matlabPtr->eval(u"ELECTRON_VOLT = 1.6e-19;");
@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton, SIGNAL (released()), this, SLOT (handleButton()));
     connect(ui->pushButton_2, SIGNAL (released()), this, SLOT (handleButton_2()));
+    connect(ui->pushButton_3, SIGNAL (released()), this, SLOT (handleButton_3()));
+
 }
 
 void MainWindow:: handleButton()
@@ -83,13 +85,6 @@ void MainWindow:: handleButton_2()
 {
     std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::connectMATLAB();
 
-    QMessageBox msgbox;
-
-    msgbox.setText((QString("lower_limit_1=find_closest(str2double(") +
-                QVariant(ui->doubleSpinBox->value()).toString() +
-                QString("), base_line_x_to_electron_volts);")));
-    msgbox.exec();
-
     matlabPtr->eval((QString("lower_limit_1=find_closest(str2double('") +
                      QVariant(ui->doubleSpinBox->value()).toString() +
                      QString("'), base_line_x_to_electron_volts);")).toStdU16String());
@@ -125,6 +120,61 @@ void MainWindow:: handleButton_2()
     ui->pushButton_2->setText("（已完成）");
     ui->doubleSpinBox->setEnabled(false);
     ui->doubleSpinBox_2->setEnabled(false);
+}
+
+void MainWindow:: handleButton_3()
+{
+    std::unique_ptr<matlab::engine::MATLABEngine> matlabPtr = matlab::engine::connectMATLAB();
+    matlabPtr->eval((QString("lower_limit_1=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox_3->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts_zoomed);")).toStdU16String());
+    matlabPtr->eval((QString("upper_limit_1=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox_4->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts_zoomed);")).toStdU16String());
+    matlabPtr->eval((QString("lower_limit_2=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox_5->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts_zoomed);")).toStdU16String());
+    matlabPtr->eval((QString("upper_limit_2=find_closest(str2double('") +
+                     QVariant(ui->doubleSpinBox_6->value()).toString() +
+                     QString("'), base_line_x_to_electron_volts_zoomed);")).toStdU16String());
+    matlabPtr->eval(u"figure('visible', 'off');");
+    matlabPtr->eval(u"subplot(2,2,1);");
+    matlabPtr->eval(u"bandgap1=fit_and_plot_one_curve(lower_limit_1, upper_limit_1, \
+                    lower_limit_2, upper_limit_2, FIT_TYPE, \
+                    base_line_x_to_electron_volts_zoomed, \
+                    base_line_y_zoomed, \
+                    transmittance_10min_zoomed, '10min');");
+    matlabPtr->eval(u"subplot(2,2,2)");
+    matlabPtr->eval(u"bandgap2=fit_and_plot_one_curve(lower_limit_1, upper_limit_1, \
+                    lower_limit_2, upper_limit_2, FIT_TYPE, \
+                    base_line_x_to_electron_volts_zoomed, \
+                    base_line_y_zoomed, \
+                    transmittance_20min_zoomed, '20min');");
+    matlabPtr->eval(u"subplot(2,2,3)");
+    matlabPtr->eval(u"bandgap3=fit_and_plot_one_curve(lower_limit_1, upper_limit_1, \
+                    lower_limit_2, upper_limit_2, FIT_TYPE, \
+                    base_line_x_to_electron_volts_zoomed, \
+                    base_line_y_zoomed, \
+                    transmittance_30min_zoomed, '30min');");
+    matlabPtr->eval(u"subplot(2,2,4)");
+    matlabPtr->eval(u"bandgap4=fit_and_plot_one_curve(lower_limit_1, upper_limit_1, \
+                    lower_limit_2, upper_limit_2, FIT_TYPE, \
+                    base_line_x_to_electron_volts_zoomed, \
+                    base_line_y_zoomed, \
+                    transmittance_40min_zoomed, '40min');");
+    matlabPtr->eval(u"mean_of_bandgap=mean([bandgap1, bandgap2, bandgap3, bandgap4]);");
+    matlabPtr->eval(u"sgtitle(['Mean of Band Gap is:', num2str(mean_of_bandgap)]);");
+    matlabPtr->eval(u"save_fig('fitting_result_all');");
+    QString filename = "figures/fitting_result_all/fitting_result_all.png";
+    QImage image(filename);
+    QPixmap pic=QPixmap::fromImage(image);
+    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->pushButton_3->setEnabled(false);
+    ui->pushButton_3->setText("（已完成）");
+    ui->doubleSpinBox_3->setEnabled(false);
+    ui->doubleSpinBox_4->setEnabled(false);
+    ui->doubleSpinBox_5->setEnabled(false);
+    ui->doubleSpinBox_6->setEnabled(false);
 }
 
 MainWindow::~MainWindow()

@@ -1,2 +1,5 @@
 *.o
 figures/*
+.qmake.stash
+Makefile
+*.user

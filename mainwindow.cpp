@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     QString filename = "figures/original_data/original_data.png";
     QImage image(filename);
     QPixmap pic=QPixmap::fromImage(image);
-    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->label->setPixmap(pic.scaled(1200,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
 
     connect(ui->pushButton, SIGNAL (released()), this, SLOT (handleButton()));
@@ -76,7 +76,7 @@ void MainWindow:: handleButton()
     QString filename = "figures/graph_needed_to_solve_band_gap/graph_needed_to_solve_band_gap.png";
     QImage image(filename);
     QPixmap pic=QPixmap::fromImage(image);
-    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->label->setPixmap(pic.scaled(1200,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->pushButton->setEnabled(false);
     ui->pushButton->setText("（已完成）");
 
@@ -116,7 +116,7 @@ void MainWindow:: handleButton_2()
     QString filename = "figures/graph_needed_to_solve_band_gap_zoomed/graph_needed_to_solve_band_gap_zoomed.png";
     QImage image(filename);
     QPixmap pic=QPixmap::fromImage(image);
-    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->label->setPixmap(pic.scaled(1200,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->pushButton_2->setEnabled(false);
     ui->pushButton_2->setText("（已完成）");
     ui->doubleSpinBox->setEnabled(false);
@@ -169,7 +169,7 @@ void MainWindow:: handleButton_3()
     QString filename = "figures/fitting_result_all/fitting_result_all.png";
     QImage image(filename);
     QPixmap pic=QPixmap::fromImage(image);
-    ui->label->setPixmap(pic.scaled(1600,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    ui->label->setPixmap(pic.scaled(1200,900,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     ui->pushButton_3->setEnabled(false);
     ui->pushButton_3->setText("（已完成）");
     ui->doubleSpinBox_3->setEnabled(false);

@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -34,12 +33,10 @@ public:
     QVBoxLayout *verticalLayout;
     QLabel *label_2;
     QPushButton *pushButton;
-    QFrame *line;
     QLabel *label_3;
     QDoubleSpinBox *doubleSpinBox;
     QDoubleSpinBox *doubleSpinBox_2;
     QPushButton *pushButton_2;
-    QFrame *line_2;
     QLabel *label_4;
     QDoubleSpinBox *doubleSpinBox_3;
     QDoubleSpinBox *doubleSpinBox_4;
@@ -52,12 +49,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1800, 900);
+        MainWindow->resize(1340, 900);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         horizontalLayoutWidget = new QWidget(centralwidget);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(0, 0, 1804, 945));
+        horizontalLayoutWidget->setGeometry(QRect(0, 0, 1341, 904));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -66,7 +63,7 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         label = new QLabel(horizontalLayoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setMinimumSize(QSize(1600, 900));
+        label->setMinimumSize(QSize(1200, 900));
         label->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
 
         verticalLayout_2->addWidget(label);
@@ -77,35 +74,37 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         verticalLayout->setContentsMargins(3, 3, 3, 3);
         label_2 = new QLabel(horizontalLayoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(label_2);
 
         pushButton = new QPushButton(horizontalLayoutWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setMinimumSize(QSize(194, 35));
-        pushButton->setMaximumSize(QSize(180, 35));
+        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(pushButton);
 
-        line = new QFrame(horizontalLayoutWidget);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        verticalLayout->addWidget(line);
-
         label_3 = new QLabel(horizontalLayoutWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
+        sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
+        label_3->setSizePolicy(sizePolicy);
+        label_3->setMaximumSize(QSize(594, 16777215));
 
         verticalLayout->addWidget(label_3);
 
         doubleSpinBox = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox->setObjectName(QString::fromUtf8("doubleSpinBox"));
-        doubleSpinBox->setMinimumSize(QSize(194, 35));
-        doubleSpinBox->setMaximumSize(QSize(180, 35));
+        sizePolicy.setHeightForWidth(doubleSpinBox->sizePolicy().hasHeightForWidth());
+        doubleSpinBox->setSizePolicy(sizePolicy);
         doubleSpinBox->setLayoutDirection(Qt::LeftToRight);
         doubleSpinBox->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
 
@@ -113,48 +112,57 @@ public:
 
         doubleSpinBox_2 = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox_2->setObjectName(QString::fromUtf8("doubleSpinBox_2"));
+        sizePolicy.setHeightForWidth(doubleSpinBox_2->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_2->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(doubleSpinBox_2);
 
         pushButton_2 = new QPushButton(horizontalLayoutWidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        sizePolicy.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
+        pushButton_2->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(pushButton_2);
 
-        line_2 = new QFrame(horizontalLayoutWidget);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setFrameShape(QFrame::HLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
-        verticalLayout->addWidget(line_2);
-
         label_4 = new QLabel(horizontalLayoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
+        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(label_4);
 
         doubleSpinBox_3 = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox_3->setObjectName(QString::fromUtf8("doubleSpinBox_3"));
+        sizePolicy.setHeightForWidth(doubleSpinBox_3->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_3->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(doubleSpinBox_3);
 
         doubleSpinBox_4 = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox_4->setObjectName(QString::fromUtf8("doubleSpinBox_4"));
+        sizePolicy.setHeightForWidth(doubleSpinBox_4->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_4->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(doubleSpinBox_4);
 
         doubleSpinBox_5 = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox_5->setObjectName(QString::fromUtf8("doubleSpinBox_5"));
+        sizePolicy.setHeightForWidth(doubleSpinBox_5->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_5->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(doubleSpinBox_5);
 
         doubleSpinBox_6 = new QDoubleSpinBox(horizontalLayoutWidget);
         doubleSpinBox_6->setObjectName(QString::fromUtf8("doubleSpinBox_6"));
+        sizePolicy.setHeightForWidth(doubleSpinBox_6->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_6->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(doubleSpinBox_6);
 
         pushButton_3 = new QPushButton(horizontalLayoutWidget);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        sizePolicy.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
+        pushButton_3->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(pushButton_3);
 

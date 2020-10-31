@@ -22,4 +22,4 @@ LIBS += /usr/local/Polyspace/R2019b/extern/bin/glnxa64/libMatlabEngine.so
 matlab.engine.shareEngine
 ```
 
-共享下MATLAB引擎。之后启动程序。程序会创建`figures`目录，用来存放所有生成过的图像。
+共享下MATLAB引擎。之后启动程序。程序会创建`figures`目录，并在其下创建相应的子目录，用来存放所有生成过的图像。
